@@ -67,7 +67,8 @@ class TestScanCustomFields(unittest.TestCase):
         self.base_cx_flow_config = {
             'cx-flow': {
                 'bug-tracker': 'WAIT',
-                'bug-tracker-impl': ['Csv', 'Jira']
+                'bug-tracker-impl': ['Csv', 'Jira'],
+                'zip-exclude': r'\.git/.*,.*\.jar,.*\.zip,.*\.log.*'
             },
             'logging': {
                 'file': {
