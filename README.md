@@ -7,34 +7,19 @@ Level Custom Fields* feature for CxFlow.
 
 The following test cases have been implemented.
 
-## Project Does Not Exist
+## Custom Fields Provided on the Command Line
 
-CxFlow is launched specifying a project that does not already
-exist. The expectation is that the project is created and that its
-custom fields are set to the provided values.
+CxFlow is launched specifying two random scan-level custom fields
+using the `--scan-custom-field` command line option.
 
-- Test using command line options
-- Test using config-as-code
+## Custom Fields Provided Using Config-As-Code
 
-## Project Exists and Override Specified
+Two random scan-level custom fields are added to the `cx.config` file
+before launching CxFlow.
 
-CxFlow is launched specifying a project that already exists and that
-the existing project configuration shoud be overridden. The
-expectation is that the project's custom fields are set to the
-provided values.
+## No Custo Fields Provided
 
-- Test using command line options
-- Test using config-as-code
-
-## Project Exists and Override Specified
-
-CxFlow is launched specifying a project that already exists but it is
-not specified that the existing project configuration shoud be
-overridden. The expectation is that the project's custom fields are
-not set to the provided values.
-
-- Test using command line options
-- Test using config-as-code
+CxFlow is launched with no scan-level custom fields specified.
 
 # Configuration
 
@@ -50,8 +35,11 @@ cx-flow:
   version: 1.6.27
 
 checkmarx:
+  api-version: "1.2"
   base-url: http://EC2AMAZ-3JBTK7R
   username: cxsastuser
   password: secret
 ```
 
+**Note:** If running the tests on an older version of CxSAST, make
+  sure to update the `api-version` accordingly.
