@@ -120,13 +120,18 @@ class TestScanCustomFields(unittest.TestCase):
             print(f'Deleting {cxConfig}')
             cxConfig.unlink()
 
+    def test_no_custom_fields(self):
+
+        expected = None
+        self.common([], expected)
+
     def test_cmdline(self):
 
         self.cmdline_common()
 
     def cmdline_common(self):
 
-        extra_args = ['--f=.', '--app=App']
+        extra_args = []
         expected = {}
         expected[self.random_string(5)] = self.random_string(5)
         expected[self.random_string(5)] = self.random_string(5)
@@ -141,7 +146,7 @@ class TestScanCustomFields(unittest.TestCase):
 
     def config_as_code_common(self):
 
-        extra_args = ['--f=.', '--app=App']
+        extra_args = []
         config = {
             'version': 1.0,
             'scanCustomFields': {
@@ -165,6 +170,8 @@ class TestScanCustomFields(unittest.TestCase):
         if self.api_version != "1.2":
             expected = None
         print(f'expected: {expected}')
+        extra_args.append('--f=.')
+        extra_args.append('--app=App')
         self.assertEqual(0, run_cxflow(self.config.data['cx-flow']['version'],
                                        self.cx_flow_config,
                                        self.project_name,
