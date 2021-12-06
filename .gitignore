@@ -1,2 +1,5 @@
 *~
-*-actual.json
+application.yml
+config.yml
+*.jar
+*.log*
