@@ -99,6 +99,7 @@ class TestScanCustomFields(unittest.TestCase):
             }
         }
 
+        self.api_version = self.config.data['checkmarx']['api-version']
         self.projects_api = ProjectsAPI()
         self.scans_api = ScansAPI()
         self.team_api = TeamAPI()
@@ -161,6 +162,8 @@ class TestScanCustomFields(unittest.TestCase):
 
     def common(self, extra_args, expected):
 
+        if self.api_version != "1.2":
+            expected = None
         print(f'expected: {expected}')
         self.assertEqual(0, run_cxflow(self.config.data['cx-flow']['version'],
                                        self.cx_flow_config,
@@ -169,10 +172,13 @@ class TestScanCustomFields(unittest.TestCase):
                                        self.config.print_cx_flow_output()))
         scans = self.scans_api.get_all_scans_for_project(self.project_id,
                                                          7, 1,
-                                                         api_version="1.2")
+                                                         api_version=self.api_version)
         scan = scans[0]
         print(f'actual: {scan.custom_fields}')
-        self.assertEqual(expected, scan.custom_fields)
+        if self.api_version == "1.2":
+            self.assertEqual(expected, scan.custom_fields)
+        else:
+            self.assertIsNone(scan.custom_fields)
 
     def create_project(self, project_name, team_name):
 
